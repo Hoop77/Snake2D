@@ -92,7 +92,7 @@ public class Game extends Canvas implements Runnable
             if( System.currentTimeMillis() - milliSecCounter >= 1000 )
             {
                 milliSecCounter += 1000;
-                System.out.println( "FPS: " + fps );
+                System.out.println( "fps: " + fps );
                 fps = 0;
             }
         }
