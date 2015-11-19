@@ -6,14 +6,15 @@ import java.util.Random;
 
 import com.snake2D.game.basic.Game;
 import com.snake2D.game.basic.Options;
-import com.snake2D.game.tile.Tile;
 
 /**
  * Created by philipp on 12.11.15.
  */
 public class MainState extends GameState
 {
-    private Tile[] tiles = new Tile[ Game.TILES_X * Game.TILES_Y ];
+    private Integer[] elements = new Integer[ Game.TILES_X * Game.TILES_Y ];
+
+    private static final int NO_ELEMENT = -1;
 
     private static final int UP = 0;
     private static final int DOWN = 1;
@@ -30,11 +31,13 @@ public class MainState extends GameState
 
     private long time = 0;
 
-    private int headX, headY;
+    private int headX;
+    private int headY;
+
+    private int foodX;
+    private int foodY;
 
     private int bodyLength = 1;
-
-    private Tile food;
 
     private boolean gameOver = false;
 
@@ -54,33 +57,53 @@ public class MainState extends GameState
 
         for( int i = 0; i < Game.TILES_X * Game.TILES_Y; i++ )
         {
-            tiles[ i ] = new Tile();
+            elements[ i ] = NO_ELEMENT;
         }
 
         headX = 5;
         headY = 5;
 
-        setTile( headX, headY, headX, headY - 1 );
+        setNextElement( headX, headY, headX, headY - 1 );
 
-        food = new Tile( 10, 10 );
+        foodX = 10;
+        foodY = 10;
 
         random = new Random();
     }
 
-    private void setTile( int xt, int yt, int x, int y )
+    private int getElement( int elementX, int elementY )
     {
-        tiles[ yt * Game.TILES_Y + xt ].x = x;
-        tiles[ yt * Game.TILES_Y + xt ].y = y;
+        return elementY * Game.TILES_X + elementX;
     }
 
-    private void freeTile( int xt, int yt )
+    private int getElementX( int element )
     {
-        tiles[ yt * Game.TILES_X + xt ].x = Tile.FREE;
+        return element % Game.TILES_X;
     }
 
-    private Tile getTile( int xt, int yt )
+    private int getElementY( int element )
     {
-        return tiles[ yt * Game.TILES_X + xt ];
+        return element / Game.TILES_X;
+    }
+
+    private void setNextElement( int thisElement, int nextElement )
+    {
+        elements[ thisElement ] = nextElement;
+    }
+
+    private void setNextElement( int thisElementX, int thisElementY, int nextElementX, int nextElementY )
+    {
+        elements[ thisElementY * Game.TILES_X + thisElementX ] = nextElementY * Game.TILES_X + nextElementX;
+    }
+
+    private int getNextElement( int thisElement )
+    {
+        return elements[ thisElement ];
+    }
+
+    private int getNextElement( int thisElementX, int thisElementY )
+    {
+        return elements[ thisElementY * Game.TILES_X + thisElementX ];
     }
 
     @Override
@@ -126,42 +149,40 @@ public class MainState extends GameState
 
     private void updateBody()
     {
-        int xt = headX;
-        int yt = headY;
+        // head is start element
+        int thisElement = getElement( headX, headY );
 
-        Tile currTile;
-
-        while( xt != Tile.FREE )
+        // repeat until we get the last element which hasn't a next element
+        while( getNextElement( thisElement ) != NO_ELEMENT )
         {
-            currTile = getTile( xt, yt );                       // get the next tile
-
-            Tile nextTile = getTile( currTile.x, currTile.y );  // get the tile which the current tile is pointing at
-
-            if( nextTile.x == Tile.FREE )                       // if that tile is free -> the current tile is the end of the snake
+            // check the value of the next element:
+            // is it 'NO_ELEMENT'? -> then 'thisElement' is the last element of the snake
+            int nextElement = getNextElement( thisElement );
+            if( getNextElement( nextElement ) == NO_ELEMENT )
             {
-                freeTile( xt, yt );                             // free that tile
+                // remove the last tile from the snake
+                setNextElement( thisElement, NO_ELEMENT );
             }
 
-            xt = currTile.x;                                    // get x-coordinate of the next tile
-            yt = currTile.y;                                    // get y-coordinate of the next tile
+            thisElement = nextElement;
         }
     }
 
     private void updateHead()
     {
         // coordinates for next head position
-        int nextHeadX = headX;
-        int nextHeadY = headY;
+        int newHeadX = headX;
+        int newHeadY = headY;
 
         // evaluate move direction and change position accordingly
         if( moveDirection == UP )
-            nextHeadY--;
+            newHeadY--;
         else if( moveDirection == DOWN )
-            nextHeadY++;
+            newHeadY++;
         else if( moveDirection == LEFT )
-            nextHeadX--;
+            newHeadX--;
         else if( moveDirection == RIGHT )
-            nextHeadX++;
+            newHeadX++;
         else
             ;
 
@@ -169,38 +190,38 @@ public class MainState extends GameState
         moveDirection = inputDirection;
 
         // check out of bounds x
-        if( nextHeadX >= Game.TILES_X )
-            nextHeadX = 0;
-        else if( nextHeadX < 0 )
-            nextHeadX = Game.TILES_X - 1;
+        if( newHeadX >= Game.TILES_X )
+            newHeadX = 0;
+        else if( newHeadX < 0 )
+            newHeadX = Game.TILES_X - 1;
         else
             ;
 
         // check out of bounds y
-        if( nextHeadY >= Game.TILES_Y )
-            nextHeadY = 0;
-        else if( nextHeadY < 0 )
-            nextHeadY = Game.TILES_Y - 1;
+        if( newHeadY >= Game.TILES_Y )
+            newHeadY = 0;
+        else if( newHeadY < 0 )
+            newHeadY = Game.TILES_Y - 1;
         else
             ;
 
         // check collision with existing tile
-        Tile nextTile = getTile( nextHeadX, nextHeadY );
-        if( nextTile.x != Tile.FREE )
+        int elementInFront = getNextElement( newHeadX, newHeadY );
+        if( elementInFront != NO_ELEMENT )
         {
             gameOver = true;
             return;
         }
 
         // move head
-        setTile( nextHeadX, nextHeadY, headX, headY );
+        setNextElement( newHeadX, newHeadY, headX, headY );
 
         // update stored head coordinates
-        headX = nextHeadX;
-        headY = nextHeadY;
+        headX = newHeadX;
+        headY = newHeadY;
 
         // if we collected food ...
-        if( headX == food.x && headY == food.y )
+        if( headX == foodX && headY == foodY )
         {
             // generate new food
             generateFood();
@@ -215,32 +236,30 @@ public class MainState extends GameState
 
     private void generateFood()
     {
-        // get all free tiles by subtracting the body length from all available tiles
-        int freeTilesCount = Game.TILES_X * Game.TILES_Y - bodyLength;
+        // get all free elements by subtracting the body length from all available elements
+        int noElementsCount = Game.TILES_X * Game.TILES_Y - bodyLength;
 
-        // array which stores indices of free tiles
-        Integer[] freeTiles = new Integer[ freeTilesCount ];
+        // array which stores indices of free elements
+        Integer[] noElements = new Integer[ noElementsCount ];
 
+        // index of noElements
+        int i = 0;
         // get all free indices
-        int i = 0;                                      // current index
-        for( int y = 0; y < Game.TILES_Y; y++ )
+        for( int element = 0; element < Game.TILES_X * Game.TILES_Y; element++ )
         {
-            for( int x = 0; x < Game.TILES_X; x++ )
+            if( getNextElement( element ) != NO_ELEMENT )
             {
-                if( getTile( x, y ).x != Tile.FREE )
-                {
-                    freeTiles[ i ] = y * Game.TILES_X + x;
-                    i++;
-                }
+                noElements[ i ] = element;
+                i++;
             }
         }
 
         // get random index
-        int randomIndex = random.nextInt( freeTilesCount );
+        int randomNoElement = random.nextInt( noElementsCount );
 
         // update food tile
-        food.x = randomIndex % Game.TILES_X;
-        food.y = randomIndex / Game.TILES_X;
+        foodX = randomNoElement % Game.TILES_X;
+        foodY = randomNoElement / Game.TILES_X;
     }
 
     @Override
@@ -248,55 +267,57 @@ public class MainState extends GameState
     {
         // render food
         graphics2D.setColor( Options.foodColor );
-        graphics2D.fillRect( food.x * Game.TILE_SIZE, food.y * Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE );
+        graphics2D.fillRect( foodX * Game.TILE_SIZE, foodY * Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE );
 
-        int xPrev = headX;
-        int yPrev = headY;
+        int prevX = headX;
+        int prevY = headY;
 
         if( moveDirection == UP )
-            yPrev--;
+            prevY--;
         else if( moveDirection == DOWN )
-            yPrev++;
+            prevY++;
         else if( moveDirection == LEFT )
-            xPrev--;
+            prevX--;
         else if( moveDirection == RIGHT )
-            xPrev++;
+            prevX++;
         else
             ;
 
-        int xCurr = headX;
-        int yCurr = headY;
-
-        Tile currTile = getTile( xCurr, yCurr );
-
-        int xNext = currTile.x;
-        int yNext = currTile.y;
+        int prevElement = getElement( prevX, prevY );
+        int thisElement = getElement( headX, headY );
+        int nextElement = getNextElement( thisElement );
 
         int xOffset = 0;
         int yOffset = 0;
 
-        while( xNext != Tile.FREE )
+        while( nextElement != NO_ELEMENT )
         {
+            prevX = getElementX( prevElement );
+            prevY = getElementY( prevElement );
+
+            int thisX = getElementX( thisElement );
+            int thisY = getElementY( thisElement );
+
             // move up
-            if( yCurr > yPrev )
+            if( thisY > prevY )
             {
                 xOffset = 0;
                 yOffset = -fluidMotionStep;
             }
             // move down
-            else if( yCurr < yPrev )
+            else if( thisY < prevY )
             {
                 xOffset = 0;
                 yOffset = fluidMotionStep;
             }
             // move left
-            else if( xCurr > xPrev )
+            else if( thisX > prevX )
             {
                 xOffset = -fluidMotionStep;
                 yOffset = 0;
             }
             // move right
-            else if( xCurr < xPrev )
+            else if( thisX < prevX )
             {
                 xOffset = fluidMotionStep;
                 yOffset = 0;
@@ -304,8 +325,8 @@ public class MainState extends GameState
             else
                 ;
 
-            int xPos = xCurr * Game.TILE_SIZE + xOffset;
-            int yPos = yCurr * Game.TILE_SIZE + yOffset;
+            int xPos = thisX * Game.TILE_SIZE + xOffset;
+            int yPos = thisY * Game.TILE_SIZE + yOffset;
 
             graphics2D.setColor( Options.snakeColor );
             graphics2D.fillOval( xPos,
@@ -313,15 +334,9 @@ public class MainState extends GameState
                                  Game.TILE_SIZE,
                                  Game.TILE_SIZE );
 
-            xPrev = xCurr;
-            yPrev = yCurr;
-
-            xCurr = xNext;
-            yCurr = yNext;
-
-            currTile = getTile( xNext, yNext );
-            xNext = currTile.x;
-            yNext = currTile.y;
+            prevElement = thisElement;
+            thisElement = getNextElement( thisElement );
+            nextElement = getNextElement( thisElement );
         }
     }
 
