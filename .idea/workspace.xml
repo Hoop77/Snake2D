@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="419660cf-7f98-4f79-a50d-d9eac38eca96" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Snake2D/com/snake2D/game/basic/Options.class" afterPath="$PROJECT_DIR$/out/production/Snake2D/com/snake2D/game/basic/Options.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Snake2D/com/snake2D/game/com/snake2D/game/states/MainState.class" afterPath="$PROJECT_DIR$/out/production/Snake2D/com/snake2D/game/com/snake2D/game/states/MainState.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/snake2D/game/basic/Options.java" afterPath="$PROJECT_DIR$/src/com/snake2D/game/basic/Options.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/MainState.java" afterPath="$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/MainState.java" />
     </list>
     <ignored path="Snake2D.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,18 +27,48 @@
     <favorites_list name="Snake2D" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GameState.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/GameState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17724289">
-              <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.58502674">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="MainState.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/MainState.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="1.059081">
+                  <caret line="305" column="0" selection-start-line="305" selection-start-column="0" selection-end-line="305" selection-end-column="0" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/basic/Game.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="87" column="12" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="12" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="Options.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/basic/Options.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.33479214">
+                  <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -96,8 +130,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -156,9 +190,31 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Snake2D" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Snake2D" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="basic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -465,8 +521,9 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39917696" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29883844" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -474,14 +531,13 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.34171122" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="2167" y="517" width="145" height="55" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="638" y="109" width="645" height="974" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.34598932" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="-3" y="109" width="645" height="974" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="638" y="109" width="645" height="974" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -496,7 +552,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -504,6 +562,24 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/MainState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="313" column="28" selection-start-line="313" selection-start-column="28" selection-end-line="313" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/basic/Options.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/tile/Tile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -518,8 +594,6 @@
           <caret line="70" column="43" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -554,8 +628,6 @@
           <caret line="70" column="43" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -582,8 +654,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -617,8 +687,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -652,8 +720,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -687,8 +753,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -722,8 +786,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -757,8 +819,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -792,8 +852,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -827,8 +885,6 @@
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -863,39 +919,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/basic/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20678337">
-          <caret line="101" column="5" selection-start-line="101" selection-start-column="5" selection-end-line="101" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Snake2D.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.118161924">
           <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/basic/Options.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.118161924">
-          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/MainState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26695842">
-          <caret line="70" column="43" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -909,9 +936,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/GameState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17724289">
-          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="4" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/basic/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="12" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/basic/Options.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33479214">
+          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/snake2D/game/com/snake2D/game/states/MainState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.059081">
+          <caret line="305" column="0" selection-start-line="305" selection-start-column="0" selection-end-line="305" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

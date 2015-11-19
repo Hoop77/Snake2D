@@ -15,9 +15,9 @@ public class Options
     // Speed
     public static final int MIN_STEP_TIME = 50;
     public static final int MAX_STEP_TIME = 500;
-    public static float speed = 1;
+    public static float speed = 0;
 
-    public static long getStepTime()
+    public static int getStepTime()
     {
         float range = (MAX_STEP_TIME - MIN_STEP_TIME) * speed;
         return MIN_STEP_TIME + (int) range;

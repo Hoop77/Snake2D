@@ -20,9 +20,13 @@ public class MainState extends GameState
     private static final int LEFT = 2;
     private static final int RIGHT = 3;
 
-    private int direction;
+    private int inputDirection = DOWN;
+    private int moveDirection = DOWN;
 
-    private static long stepTime;
+    private int moveStepTime;
+
+    private int getFluidMotionStepTime;
+    private int fluidMotionStep = 0;
 
     private long time = 0;
 
@@ -44,7 +48,9 @@ public class MainState extends GameState
     @Override
     public void init()
     {
-        stepTime = Options.getStepTime();
+        moveStepTime = Options.getStepTime();
+
+        getFluidMotionStepTime = moveStepTime / Game.TILE_SIZE;
 
         for( int i = 0; i < Game.TILES_X * Game.TILES_Y; i++ )
         {
@@ -53,7 +59,6 @@ public class MainState extends GameState
 
         headX = 5;
         headY = 5;
-        direction = DOWN;
 
         setTile( headX, headY, headX, headY - 1 );
 
@@ -86,10 +91,26 @@ public class MainState extends GameState
 
         handleInput();
 
-        if( System.currentTimeMillis() - time >= stepTime )
+        long deltaTime = System.currentTimeMillis() - time;
+
+        fluidMotionStep = ( int ) deltaTime / getFluidMotionStepTime;
+
+        if( deltaTime >= moveStepTime )
         {
             nextStep();
         }
+    }
+
+    private void handleInput()
+    {
+        if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_UP ) && moveDirection != DOWN )
+            inputDirection = UP;
+        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_DOWN ) && moveDirection != UP )
+            inputDirection = DOWN;
+        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_LEFT ) && moveDirection != RIGHT )
+            inputDirection = LEFT;
+        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_RIGHT ) && moveDirection != LEFT )
+            inputDirection = RIGHT;
     }
 
     private void nextStep()
@@ -97,27 +118,10 @@ public class MainState extends GameState
         updateBody();
         updateHead();
 
+        // now, that the snake was updated, reset the fluid motion step
+        fluidMotionStep = 0;
+
         time = System.currentTimeMillis();
-    }
-
-    private void log()
-    {
-        int xt = headX;
-        int yt = headY;
-
-        Tile currTile = getTile( xt, yt );
-
-        while( currTile.x != Tile.FREE )
-        {
-            System.out.println( xt + "," + yt + " -> " + currTile.x + "," + currTile.y );
-
-            xt = currTile.x;
-            yt = currTile.y;
-
-            currTile = getTile( xt, yt );
-        }
-
-        System.out.println( "" );
     }
 
     private void updateBody()
@@ -149,17 +153,20 @@ public class MainState extends GameState
         int nextHeadX = headX;
         int nextHeadY = headY;
 
-        // evaluate direction and change position accordingly
-        if( direction == UP )
+        // evaluate move direction and change position accordingly
+        if( moveDirection == UP )
             nextHeadY--;
-        else if( direction == DOWN )
+        else if( moveDirection == DOWN )
             nextHeadY++;
-        else if( direction == LEFT )
+        else if( moveDirection == LEFT )
             nextHeadX--;
-        else if( direction == RIGHT )
+        else if( moveDirection == RIGHT )
             nextHeadX++;
         else
             ;
+
+        // update move direction
+        moveDirection = inputDirection;
 
         // check out of bounds x
         if( nextHeadX >= Game.TILES_X )
@@ -236,18 +243,6 @@ public class MainState extends GameState
         food.y = randomIndex / Game.TILES_X;
     }
 
-    private void handleInput()
-    {
-        if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_UP ) && direction != DOWN )
-            direction = UP;
-        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_DOWN ) && direction != UP )
-            direction = DOWN;
-        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_LEFT ) && direction != RIGHT )
-            direction = LEFT;
-        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_RIGHT ) && direction != LEFT )
-            direction = RIGHT;
-    }
-
     @Override
     public void render( Graphics2D graphics2D )
     {
@@ -255,20 +250,78 @@ public class MainState extends GameState
         graphics2D.setColor( Options.foodColor );
         graphics2D.fillRect( food.x * Game.TILE_SIZE, food.y * Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE );
 
-        int xt = headX;
-        int yt = headY;
+        int xPrev = headX;
+        int yPrev = headY;
 
-        Tile currTile = getTile( xt, yt );
+        if( moveDirection == UP )
+            yPrev--;
+        else if( moveDirection == DOWN )
+            yPrev++;
+        else if( moveDirection == LEFT )
+            xPrev--;
+        else if( moveDirection == RIGHT )
+            xPrev++;
+        else
+            ;
 
-        while( currTile.x != Tile.FREE )
+        int xCurr = headX;
+        int yCurr = headY;
+
+        Tile currTile = getTile( xCurr, yCurr );
+
+        int xNext = currTile.x;
+        int yNext = currTile.y;
+
+        int xOffset = 0;
+        int yOffset = 0;
+
+        while( xNext != Tile.FREE )
         {
+            // move up
+            if( yCurr > yPrev )
+            {
+                xOffset = 0;
+                yOffset = -fluidMotionStep;
+            }
+            // move down
+            else if( yCurr < yPrev )
+            {
+                xOffset = 0;
+                yOffset = fluidMotionStep;
+            }
+            // move left
+            else if( xCurr > xPrev )
+            {
+                xOffset = -fluidMotionStep;
+                yOffset = 0;
+            }
+            // move right
+            else if( xCurr < xPrev )
+            {
+                xOffset = fluidMotionStep;
+                yOffset = 0;
+            }
+            else
+                ;
+
+            int xPos = xCurr * Game.TILE_SIZE + xOffset;
+            int yPos = yCurr * Game.TILE_SIZE + yOffset;
+
             graphics2D.setColor( Options.snakeColor );
-            graphics2D.fillRect( xt * Game.TILE_SIZE, yt * Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE );
+            graphics2D.fillOval( xPos,
+                                 yPos,
+                                 Game.TILE_SIZE,
+                                 Game.TILE_SIZE );
 
-            xt = currTile.x;
-            yt = currTile.y;
+            xPrev = xCurr;
+            yPrev = yCurr;
 
-            currTile = getTile( xt, yt );
+            xCurr = xNext;
+            yCurr = yNext;
+
+            currTile = getTile( xNext, yNext );
+            xNext = currTile.x;
+            yNext = currTile.y;
         }
     }
 
