@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="419660cf-7f98-4f79-a50d-d9eac38eca96" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/snake2D/game/basic/Game.java" afterPath="$PROJECT_DIR$/src/com/snake2D/game/basic/Game.java" />
-    </list>
+    <list default="true" id="419660cf-7f98-4f79-a50d-d9eac38eca96" name="Default" comment="" />
     <ignored path="Snake2D.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -97,8 +95,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1524" />
-    <option name="y" value="98" />
+    <option name="x" value="1526" />
+    <option name="y" value="78" />
     <option name="width" value="1098" />
     <option name="height" value="903" />
   </component>
@@ -510,7 +508,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1524" y="98" width="1098" height="903" extended-state="0" />
+    <frame x="1526" y="78" width="1098" height="903" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
