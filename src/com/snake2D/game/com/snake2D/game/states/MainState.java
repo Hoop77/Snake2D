@@ -51,6 +51,8 @@ public class MainState extends GameState
     @Override
     public void init()
     {
+        Game.setTitle( Game.TITLE + "   Score: " + bodyLength );
+
         moveStepTime = Options.getStepTime();
 
         getFluidMotionStepTime = moveStepTime / Game.TILE_SIZE;
@@ -228,6 +230,9 @@ public class MainState extends GameState
 
             // increase body length
             bodyLength++;
+
+            // update score
+            Game.setTitle( Game.TITLE + "   Score: " + bodyLength );
 
             // update the head one more time
             updateHead();

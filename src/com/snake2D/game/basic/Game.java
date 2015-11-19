@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable
 
     private boolean running = false;
 
-    private JFrame frame;
+    private static JFrame frame;
 
     private static final long FPS = 60L;
     private static final long FRAME_TIME_NANO = 1000000000L / FPS;
@@ -33,6 +33,18 @@ public class Game extends Canvas implements Runnable
     
     public Game()
     {
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        /// !!!!!!!!! IMPORTANT !!!!!!!!! \\\
+        // These lines have to be added in order to make the back buffer
+        // functionality work on different systems.
+
+        System.setProperty( "sun.java2d.transaccel", "True" );
+        System.setProperty( "sun.java2d.d3d", "True" );
+        System.setProperty( "sun.java2d.ddforcevram", "True" );
+        System.setProperty( "sun.java2d.opengl", "True" );
+
+        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
         setMinimumSize( new Dimension( WIDTH, HEIGHT ) );
         setMaximumSize( new Dimension( WIDTH, HEIGHT ) );
         setPreferredSize( new Dimension( WIDTH, HEIGHT ) );
@@ -48,11 +60,11 @@ public class Game extends Canvas implements Runnable
         frame.setResizable( false );
         frame.setLocationRelativeTo( null );
         frame.setVisible( true );
-        
+
         keyboardInputHandler = new KeyboardInputHandler();
         frame.addKeyListener( keyboardInputHandler );
     }
-    
+
     public synchronized void start()
     {
         running = true;
@@ -92,7 +104,7 @@ public class Game extends Canvas implements Runnable
             if( System.currentTimeMillis() - milliSecCounter >= 1000 )
             {
                 milliSecCounter += 1000;
-                System.out.println( "FPS: " + fps );
+                //System.out.println( "FPS: " + fps );
                 fps = 0;
             }
         }
@@ -123,6 +135,11 @@ public class Game extends Canvas implements Runnable
 
         graphics.dispose();
         bufferStrategy.show();
+    }
+
+    public static void setTitle( String title )
+    {
+        frame.setTitle( title );
     }
 
     public synchronized void dispose()
