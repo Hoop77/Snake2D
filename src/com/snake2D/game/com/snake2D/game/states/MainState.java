@@ -127,13 +127,13 @@ public class MainState extends GameState
 
     private void handleInput()
     {
-        if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_UP ) && moveDirection != DOWN )
+        if( Game.keyboardInputHandler.isKeyDown( KeyEvent.VK_UP ) && moveDirection != DOWN )
             inputDirection = UP;
-        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_DOWN ) && moveDirection != UP )
+        else if( Game.keyboardInputHandler.isKeyDown( KeyEvent.VK_DOWN ) && moveDirection != UP )
             inputDirection = DOWN;
-        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_LEFT ) && moveDirection != RIGHT )
+        else if( Game.keyboardInputHandler.isKeyDown( KeyEvent.VK_LEFT ) && moveDirection != RIGHT )
             inputDirection = LEFT;
-        else if( Game.keyboardInputHandler.isKeyPressed( KeyEvent.VK_RIGHT ) && moveDirection != LEFT )
+        else if( Game.keyboardInputHandler.isKeyDown( KeyEvent.VK_RIGHT ) && moveDirection != LEFT )
             inputDirection = RIGHT;
     }
 
