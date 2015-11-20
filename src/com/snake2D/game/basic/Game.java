@@ -15,8 +15,8 @@ public class Game extends Canvas implements Runnable
     public static final String TITLE = "Snake";
 
     public static final int TILE_SIZE = 16;
-    public static final int TILES_X = 30;
-    public static final int TILES_Y = 30;
+    public static final int TILES_X = 20;
+    public static final int TILES_Y = 20;
 
     public static final int WIDTH = TILE_SIZE * TILES_X;
     public static final int HEIGHT = TILE_SIZE * TILES_Y;

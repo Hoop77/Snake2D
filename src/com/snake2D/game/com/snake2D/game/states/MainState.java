@@ -62,15 +62,14 @@ public class MainState extends GameState
             elements[ i ] = NO_ELEMENT;
         }
 
-        headX = 5;
-        headY = 5;
+        random = new Random();
+
+        headX = random.nextInt( Game.TILES_X );
+        headY = random.nextInt( Game.TILES_Y );
 
         setNextElement( headX, headY, headX, headY - 1 );
 
-        foodX = 10;
-        foodY = 10;
-
-        random = new Random();
+        generateFood();
     }
 
     private int getElement( int elementX, int elementY )
