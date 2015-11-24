@@ -2,6 +2,7 @@ package com.snake2D.game.com.snake2D.game.states;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.TileObserver;
 import java.util.Random;
 
 import com.snake2D.game.basic.Game;
@@ -251,7 +252,7 @@ public class MainState extends GameState
         // get all free indices
         for( int element = 0; element < Game.TILES_X * Game.TILES_Y; element++ )
         {
-            if( getNextElement( element ) != NO_ELEMENT )
+            if( getNextElement( element ) == NO_ELEMENT )
             {
                 noElements[ i ] = element;
                 i++;
@@ -262,8 +263,8 @@ public class MainState extends GameState
         int randomNoElement = random.nextInt( noElementsCount );
 
         // update food tile
-        foodX = randomNoElement % Game.TILES_X;
-        foodY = randomNoElement / Game.TILES_X;
+        foodX = noElements[ randomNoElement ] % Game.TILES_X;
+        foodY = noElements[ randomNoElement ] / Game.TILES_X;
     }
 
     @Override
@@ -277,68 +278,148 @@ public class MainState extends GameState
         int prevY = headY;
 
         if( moveDirection == UP )
-            prevY--;
+        {
+            if( headY == 0 )
+                prevY = Game.TILES_Y - 1;
+            else
+                prevY--;
+        }
         else if( moveDirection == DOWN )
-            prevY++;
+        {
+            if( headY == Game.TILES_Y - 1 )
+                prevY = 0;
+            else
+                prevY++;
+        }
         else if( moveDirection == LEFT )
-            prevX--;
+        {
+            if( headX == 0 )
+                prevX = Game.TILES_X - 1;
+            else
+                prevX--;
+        }
         else if( moveDirection == RIGHT )
-            prevX++;
-        else
-            ;
+        {
+            if( headX == Game.TILES_X - 1 )
+                prevX = 0;
+            else
+                prevX++;
+        }
 
-        int prevElement = getElement( prevX, prevY );
+        int thisX;
+        int thisY;
+
         int thisElement = getElement( headX, headY );
         int nextElement = getNextElement( thisElement );
 
         int xOffset = 0;
         int yOffset = 0;
 
+        int xPos;
+        int yPos;
+
+        int teleport;
+
         while( nextElement != NO_ELEMENT )
         {
-            prevX = getElementX( prevElement );
-            prevY = getElementY( prevElement );
+            teleport = -1;
 
-            int thisX = getElementX( thisElement );
-            int thisY = getElementY( thisElement );
+            thisX = getElementX( thisElement );
+            thisY = getElementY( thisElement );
+
+            xOffset = 0;
+            yOffset = 0;
 
             // move up
             if( thisY > prevY )
             {
-                xOffset = 0;
-                yOffset = -fluidMotionStep;
+                if( thisY == Game.TILES_Y - 1 && prevY == 0 )
+                {
+                    xOffset = 0;
+                    yOffset = fluidMotionStep;
+
+                    teleport = UP;
+                }
+                else
+                {
+                    xOffset = 0;
+                    yOffset = -fluidMotionStep;
+                }
             }
             // move down
             else if( thisY < prevY )
             {
-                xOffset = 0;
-                yOffset = fluidMotionStep;
+                if( thisY == 0 && prevY == Game.TILES_Y - 1 )
+                {
+                    xOffset = 0;
+                    yOffset = -fluidMotionStep;
+
+                    teleport = DOWN;
+                }
+                else
+                {
+                    xOffset = 0;
+                    yOffset = fluidMotionStep;
+                }
             }
             // move left
             else if( thisX > prevX )
             {
-                xOffset = -fluidMotionStep;
-                yOffset = 0;
+                if( thisX == Game.TILES_X - 1 && prevX == 0 )
+                {
+                    xOffset = fluidMotionStep;
+                    yOffset = 0;
+
+                    teleport = LEFT;
+                }
+                else
+                {
+                    xOffset = -fluidMotionStep;
+                    yOffset = 0;
+                }
             }
             // move right
             else if( thisX < prevX )
             {
-                xOffset = fluidMotionStep;
-                yOffset = 0;
-            }
-            else
-                ;
+                if( thisX == 0 && prevX == Game.TILES_X - 1 )
+                {
+                    xOffset = -fluidMotionStep;
+                    yOffset = 0;
 
-            int xPos = thisX * Game.TILE_SIZE + xOffset;
-            int yPos = thisY * Game.TILE_SIZE + yOffset;
+                    teleport = RIGHT;
+                }
+                else
+                {
+                    xOffset = fluidMotionStep;
+                    yOffset = 0;
+                }
+            }
+            else;
+
+            xPos = thisX * Game.TILE_SIZE + xOffset;
+            yPos = thisY * Game.TILE_SIZE + yOffset;
 
             graphics2D.setColor( Options.snakeColor );
-            graphics2D.fillOval( xPos,
-                                 yPos,
-                                 Game.TILE_SIZE,
-                                 Game.TILE_SIZE );
+            graphics2D.fillOval( xPos, yPos, Game.TILE_SIZE, Game.TILE_SIZE );
 
-            prevElement = thisElement;
+            if( teleport != -1 )
+            {
+                if( teleport == UP )
+                    yPos = yOffset - Game.TILE_SIZE;
+                else if( teleport == DOWN )
+                    yPos = ( Game.TILES_Y ) * Game.TILE_SIZE - fluidMotionStep ;
+                else if( teleport == LEFT )
+                    xPos = xOffset - Game.TILE_SIZE;
+                else if( teleport == RIGHT )
+                    xPos = ( Game.TILES_X ) * Game.TILE_SIZE - fluidMotionStep;
+                else;
+
+                graphics2D.fillOval( xPos, yPos, Game.TILE_SIZE, Game.TILE_SIZE );
+            }
+
+            prevX = getElementX( thisElement );
+            prevY = getElementY( thisElement );
+
             thisElement = getNextElement( thisElement );
             nextElement = getNextElement( thisElement );
         }
