@@ -2,7 +2,6 @@ package com.snake2D.game.com.snake2D.game.states;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.TileObserver;
 import java.util.Random;
 
 import com.snake2D.game.basic.Game;
@@ -274,9 +273,11 @@ public class MainState extends GameState
         graphics2D.setColor( Options.foodColor );
         graphics2D.fillRect( foodX * Game.TILE_SIZE, foodY * Game.TILE_SIZE, Game.TILE_SIZE, Game.TILE_SIZE );
 
+        // store coordinates of the previously rendered element
         int prevX = headX;
         int prevY = headY;
 
+        // because there is no previous element of the head we 'virtually' create one
         if( moveDirection == UP )
         {
             if( headY == 0 )
@@ -306,120 +307,145 @@ public class MainState extends GameState
                 prevX++;
         }
 
+        // coordinates of the currently rendered element
         int thisX;
         int thisY;
 
+        // currently rendered element
         int thisElement = getElement( headX, headY );
+
+        // element which will be rendered during the next loop
         int nextElement = getNextElement( thisElement );
 
-        int xOffset = 0;
-        int yOffset = 0;
+        // offsets for fluid motion
+        int offsetX;
+        int offsetY;
 
+        // position which the element will be rendered at
         int xPos;
         int yPos;
 
+        // indicates whether the current element is going out of bounds in the next step
         int teleport;
 
+        // repeat until we reaches the end of the snake
         while( nextElement != NO_ELEMENT )
         {
+            // reset teleport value
             teleport = -1;
 
+            // reset offset values
+            offsetX = 0;
+            offsetY = 0;
+
+            // get the coordinates of the currently rendered element
             thisX = getElementX( thisElement );
             thisY = getElementY( thisElement );
 
-            xOffset = 0;
-            yOffset = 0;
-
+            //
+            // now we obtain the direction how the current element moves
+            // to get the correct offset values for fluid motion
+            //
             // move up
             if( thisY > prevY )
             {
+                // bottom bounds reached
                 if( thisY == Game.TILES_Y - 1 && prevY == 0 )
                 {
-                    xOffset = 0;
-                    yOffset = fluidMotionStep;
+                    offsetX = 0;
+                    offsetY = fluidMotionStep;
 
                     teleport = UP;
                 }
                 else
                 {
-                    xOffset = 0;
-                    yOffset = -fluidMotionStep;
+                    offsetX = 0;
+                    offsetY = -fluidMotionStep;
                 }
             }
             // move down
             else if( thisY < prevY )
             {
+                // top bounds reached
                 if( thisY == 0 && prevY == Game.TILES_Y - 1 )
                 {
-                    xOffset = 0;
-                    yOffset = -fluidMotionStep;
+                    offsetX = 0;
+                    offsetY = -fluidMotionStep;
 
                     teleport = DOWN;
                 }
                 else
                 {
-                    xOffset = 0;
-                    yOffset = fluidMotionStep;
+                    offsetX = 0;
+                    offsetY = fluidMotionStep;
                 }
             }
             // move left
             else if( thisX > prevX )
             {
+                // right bounds reached
                 if( thisX == Game.TILES_X - 1 && prevX == 0 )
                 {
-                    xOffset = fluidMotionStep;
-                    yOffset = 0;
+                    offsetX = fluidMotionStep;
+                    offsetY = 0;
 
                     teleport = LEFT;
                 }
                 else
                 {
-                    xOffset = -fluidMotionStep;
-                    yOffset = 0;
+                    offsetX = -fluidMotionStep;
+                    offsetY = 0;
                 }
             }
             // move right
             else if( thisX < prevX )
             {
+                // left bounds reached
                 if( thisX == 0 && prevX == Game.TILES_X - 1 )
                 {
-                    xOffset = -fluidMotionStep;
-                    yOffset = 0;
+                    offsetX = -fluidMotionStep;
+                    offsetY = 0;
 
                     teleport = RIGHT;
                 }
                 else
                 {
-                    xOffset = fluidMotionStep;
-                    yOffset = 0;
+                    offsetX = fluidMotionStep;
+                    offsetY = 0;
                 }
             }
-            else;
 
-            xPos = thisX * Game.TILE_SIZE + xOffset;
-            yPos = thisY * Game.TILE_SIZE + yOffset;
+            // calculate position coordinates
+            xPos = thisX * Game.TILE_SIZE + offsetX;
+            yPos = thisY * Game.TILE_SIZE + offsetY;
 
+            // do the rendering
             graphics2D.setColor( Options.snakeColor );
             graphics2D.fillOval( xPos, yPos, Game.TILE_SIZE, Game.TILE_SIZE );
 
+            // if we reached the bounds we have to render the half of the element
             if( teleport != -1 )
             {
+                // calculate the positions for the other half of the element at the other end of the field
                 if( teleport == UP )
-                    yPos = yOffset - Game.TILE_SIZE;
+                    yPos = offsetY - Game.TILE_SIZE;
                 else if( teleport == DOWN )
                     yPos = ( Game.TILES_Y ) * Game.TILE_SIZE - fluidMotionStep ;
                 else if( teleport == LEFT )
-                    xPos = xOffset - Game.TILE_SIZE;
+                    xPos = offsetX - Game.TILE_SIZE;
                 else if( teleport == RIGHT )
                     xPos = ( Game.TILES_X ) * Game.TILE_SIZE - fluidMotionStep;
                 else;
 
+                // render that part of the element
                 graphics2D.fillOval( xPos, yPos, Game.TILE_SIZE, Game.TILE_SIZE );
             }
 
+            // update previous coordinates
             prevX = getElementX( thisElement );
             prevY = getElementY( thisElement );
 
+            // update current and next element
             thisElement = getNextElement( thisElement );
             nextElement = getNextElement( thisElement );
         }
