@@ -217,9 +217,6 @@ public class MainState extends GameState
         else
             ;
 
-        // update score in title bar
-        Game.setTitle( getElement( headX, headY ) + "   Score: " + bodyLength );
-
         // check collision with existing tile
         int elementInFront = getNextElement( newHeadX, newHeadY );
         if( elementInFront != NO_ELEMENT )
