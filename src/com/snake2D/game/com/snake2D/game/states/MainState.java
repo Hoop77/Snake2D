@@ -2,6 +2,7 @@ package com.snake2D.game.com.snake2D.game.states;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.TileObserver;
 import java.util.Random;
 
 import com.snake2D.game.basic.Game;
@@ -64,8 +65,8 @@ public class MainState extends GameState
 
         random = new Random();
 
-        headX = random.nextInt( Game.TILES_X );
-        headY = random.nextInt( Game.TILES_Y );
+        headX = random.nextInt( Game.TILES_X - 1 ) + 1;
+        headY = random.nextInt( Game.TILES_Y - 1 ) + 1;
 
         setNextElement( headX, headY, headX, headY - 1 );
 
@@ -158,12 +159,12 @@ public class MainState extends GameState
         int thisElement = getElement( headX, headY );
 
         // repeat until we get the last element which hasn't a next element
-        while( getNextElement( thisElement ) != NO_ELEMENT )
+        do
         {
             // check the value of the next element:
             // is it 'NO_ELEMENT'? -> then 'thisElement' is the last element of the snake
             int nextElement = getNextElement( thisElement );
-            if( getNextElement( nextElement ) == NO_ELEMENT )
+            if( isEndOfSnake( nextElement ) )
             {
                 // remove the last tile from the snake
                 setNextElement( thisElement, NO_ELEMENT );
@@ -171,6 +172,12 @@ public class MainState extends GameState
 
             thisElement = nextElement;
         }
+        while( !isEndOfSnake( thisElement ) );
+    }
+
+    private boolean isEndOfSnake( int element )
+    {
+        return getNextElement( element ) == NO_ELEMENT || element == getElement( headX, headY );
     }
 
     private void updateHead()
@@ -210,11 +217,15 @@ public class MainState extends GameState
         else
             ;
 
+        // update score in title bar
+        Game.setTitle( getElement( headX, headY ) + "   Score: " + bodyLength );
+
         // check collision with existing tile
         int elementInFront = getNextElement( newHeadX, newHeadY );
         if( elementInFront != NO_ELEMENT )
         {
             gameOver = true;
+            Game.setTitle( Game.TITLE + "   Score: " + bodyLength + " GAME OVER!");
             return;
         }
 
@@ -333,7 +344,7 @@ public class MainState extends GameState
         int teleport;
 
         // repeat until we reaches the end of the snake
-        while( nextElement != NO_ELEMENT )
+        do
         {
             // reset teleport value
             teleport = -1;
@@ -453,6 +464,7 @@ public class MainState extends GameState
             thisElement = getNextElement( thisElement );
             nextElement = getNextElement( thisElement );
         }
+        while( !isEndOfSnake( thisElement ) );
     }
 
     @Override

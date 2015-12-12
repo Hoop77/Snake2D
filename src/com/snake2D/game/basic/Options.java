@@ -13,7 +13,7 @@ public class Options
     public static Color foodColor = new Color( 180, 50, 50 );
 
     // Speed
-    public static final int MIN_STEP_TIME = 50;
+    public static final int MIN_STEP_TIME = 100;
     public static final int MAX_STEP_TIME = 500;
     public static float speed = 0;
 
